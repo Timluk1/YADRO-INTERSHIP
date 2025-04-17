@@ -32,5 +32,6 @@ const filtersSlice = createSlice({
     },
 });
 
-export const { setStatusFilter, setDateFilter, setPriorityFilter } = filtersSlice.actions;
+export const { setStatusFilter, setDateFilter, setPriorityFilter } =
+    filtersSlice.actions;
 export default filtersSlice.reducer;

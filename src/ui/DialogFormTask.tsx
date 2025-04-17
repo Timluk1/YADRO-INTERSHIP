@@ -1,7 +1,7 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "@/ui/shadcn/button"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/ui/shadcn/button";
 import {
     Form,
     FormControl,
@@ -9,29 +9,37 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/ui/shadcn/form"
-import { Input } from "@/ui/shadcn/input"
-import { Popover, PopoverTrigger, PopoverContent } from "@/ui/shadcn/popover"
-import { CalendarIcon } from "lucide-react"
-import { Calendar } from "@/ui/shadcn/calendar" 
-import { format } from "date-fns"
-import { ru } from "date-fns/locale"
-import { useAppDispatch } from "@/utils/hooks/useAppDispatch"
-import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue} from "@/ui/shadcn/select"
-import { addTask, updateTask } from "@/core/Tasks/TasksSlice"
-import { ITask } from "@/core/Tasks/types"
+} from "@/ui/shadcn/form";
+import { Input } from "@/ui/shadcn/input";
+import { Popover, PopoverTrigger, PopoverContent } from "@/ui/shadcn/popover";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@/ui/shadcn/calendar";
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
+import { useAppDispatch } from "@/utils/hooks/useAppDispatch";
+import {
+    Select,
+    SelectItem,
+    SelectTrigger,
+    SelectContent,
+    SelectValue,
+} from "@/ui/shadcn/select";
+import { addTask, updateTask } from "@/core/Tasks/TasksSlice";
+import { ITask } from "@/core/Tasks/types";
 
 const formSchema = z.object({
     title: z.string().min(3, {
         message: "Название должно состоять минимум из 3 символов",
     }),
-    dueDate: z.date({
-        message: "Выберите дату",
-    }).min(new Date(), {
-        message: "Дата должна быть больше текущей",
-    }),
-    priority: z.enum(["Низкий", "Средний", "Высокий"])
-})
+    dueDate: z
+        .date({
+            message: "Выберите дату",
+        })
+        .min(new Date(), {
+            message: "Дата должна быть больше текущей",
+        }),
+    priority: z.enum(["Низкий", "Средний", "Высокий"]),
+});
 
 interface IDialogFormTaskProps {
     task?: ITask;
@@ -39,26 +47,29 @@ interface IDialogFormTaskProps {
     sumbmitButtonText: string;
 }
 
-export const DialogFormTask: React.FC<IDialogFormTaskProps> = ({ task, closeDialog, sumbmitButtonText }) => {
+export const DialogFormTask: React.FC<IDialogFormTaskProps> = ({
+    task,
+    closeDialog,
+    sumbmitButtonText,
+}) => {
     const dispatch = useAppDispatch();
     // определяем дефолтные значения в зависимоти от вида формы
     const defaultValues = task
         ? {
-            title: task.title,
-            dueDate: new Date(task.dueDate),
-            priority: task.priority,
-        }
+              title: task.title,
+              dueDate: new Date(task.dueDate),
+              priority: task.priority,
+          }
         : {
-            title: "",
-            dueDate: undefined,
-            priority: "Средний" as const,
-        };
+              title: "",
+              dueDate: undefined,
+              priority: "Средний" as const,
+          };
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues,
-    })
-
+    });
 
     const onSubmit = (values: z.infer<typeof formSchema>) => {
         const parsedValues = {
@@ -68,14 +79,19 @@ export const DialogFormTask: React.FC<IDialogFormTaskProps> = ({ task, closeDial
         // определя
 
         if (task) {
-            dispatch(updateTask({ ...parsedValues, id: task.id, completed: task.completed }));
+            dispatch(
+                updateTask({
+                    ...parsedValues,
+                    id: task.id,
+                    completed: task.completed,
+                }),
+            );
         } else {
             dispatch(addTask(parsedValues));
         }
 
         closeDialog();
     };
-
 
     return (
         <Form {...form}>
@@ -104,14 +120,23 @@ export const DialogFormTask: React.FC<IDialogFormTaskProps> = ({ task, closeDial
                                 <PopoverTrigger asChild>
                                     <Button
                                         variant={"outline"}
-                                        className={`w-full justify-start text-left font-normal ${!field.value && "text-muted-foreground"
-                                            }`}
+                                        className={`w-full justify-start text-left font-normal ${
+                                            !field.value &&
+                                            "text-muted-foreground"
+                                        }`}
                                     >
                                         <CalendarIcon className="mr-2 h-4 w-4" />
-                                        {field.value ? format(field.value, "PPP", { locale: ru }) : "Выберите дату"}
+                                        {field.value
+                                            ? format(field.value, "PPP", {
+                                                  locale: ru,
+                                              })
+                                            : "Выберите дату"}
                                     </Button>
                                 </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0" align="start">
+                                <PopoverContent
+                                    className="w-auto p-0"
+                                    align="start"
+                                >
                                     <Calendar
                                         mode="single"
                                         selected={field.value}
@@ -132,14 +157,23 @@ export const DialogFormTask: React.FC<IDialogFormTaskProps> = ({ task, closeDial
                         <FormItem>
                             <FormLabel>Приоритет</FormLabel>
                             <FormControl>
-                                <Select value={field.value} onValueChange={field.onChange}>
+                                <Select
+                                    value={field.value}
+                                    onValueChange={field.onChange}
+                                >
                                     <SelectTrigger className="w-full">
                                         <SelectValue placeholder="По приоритету" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="Низкий">Низкий</SelectItem>
-                                        <SelectItem value="Средний">Средний</SelectItem>
-                                        <SelectItem value="Высокий">Высокий</SelectItem>
+                                        <SelectItem value="Низкий">
+                                            Низкий
+                                        </SelectItem>
+                                        <SelectItem value="Средний">
+                                            Средний
+                                        </SelectItem>
+                                        <SelectItem value="Высокий">
+                                            Высокий
+                                        </SelectItem>
                                     </SelectContent>
                                 </Select>
                             </FormControl>
@@ -153,5 +187,5 @@ export const DialogFormTask: React.FC<IDialogFormTaskProps> = ({ task, closeDial
                 </Button>
             </form>
         </Form>
-    )
-}
+    );
+};

@@ -32,43 +32,51 @@ export const Task: React.FC<ITask> = (task) => {
     const handleToggle = () => dispatch(toggleTaskCompletion(id));
     const handleDelete = () => dispatch(deleteTask(id));
     const handleEdit = () => openDialog();
-    
+
     // определяем статус таски
     const statusLabel = completed
         ? "Выполнено"
         : overdue
-            ? "Просрочено"
-            : "Не выполнено";
+          ? "Просрочено"
+          : "Не выполнено";
 
-    
     // определяем цвет статуса таски
     const statusColor = completed
         ? "text-green-600"
         : overdue
-            ? "text-red-600"
-            : "text-yellow-600";
+          ? "text-red-600"
+          : "text-yellow-600";
 
     return (
         <Card className="shadow-md rounded-2xl">
             <CardContent className="p-4 flex justify-between items-center">
                 <div className="flex items-start gap-3">
                     {!overdue && (
-                        <Checkbox onCheckedChange={handleToggle} checked={completed} />
+                        <Checkbox
+                            onCheckedChange={handleToggle}
+                            checked={completed}
+                        />
                     )}
 
                     <div className="flex flex-col gap-1">
-                        <p className={`text-base font-medium ${completed ? "line-through text-muted-foreground" : ""}`}>
+                        <p
+                            className={`text-base font-medium ${completed ? "line-through text-muted-foreground" : ""}`}
+                        >
                             {title}
                         </p>
 
-                        <p className={`text-sm ${overdue ? "text-red-600 font-semibold" : "text-muted-foreground"}`}>
+                        <p
+                            className={`text-sm ${overdue ? "text-red-600 font-semibold" : "text-muted-foreground"}`}
+                        >
                             До: {format(new Date(dueDate), "dd.MM.yyyy")}
                             {overdue && " (Просрочено)"}
                         </p>
 
                         <p className="text-sm">
                             Приоритет:{" "}
-                            <span className={`font-medium ${getPriorityColor(priority)}`}>
+                            <span
+                                className={`font-medium ${getPriorityColor(priority)}`}
+                            >
                                 {priority}
                             </span>
                         </p>
@@ -78,7 +86,9 @@ export const Task: React.FC<ITask> = (task) => {
                 <div className="flex items-center gap-4">
                     <div className="flex flex-col gap-3 text-sm font-semibold">
                         <span className={statusColor}>{statusLabel}</span>
-                        <Button onClick={handleEdit} variant="ghost">Изменить</Button>
+                        <Button onClick={handleEdit} variant="ghost">
+                            Изменить
+                        </Button>
                     </div>
 
                     <button onClick={handleDelete}>

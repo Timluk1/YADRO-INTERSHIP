@@ -4,7 +4,6 @@ interface ITask {
     dueDate: string;
     completed: boolean;
     priority: "Низкий" | "Средний" | "Высокий";
-
 }
 
 type IAddTaskPayload = Omit<Omit<ITask, "completed">, "id">;

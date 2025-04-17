@@ -18,7 +18,7 @@ export const Tasks = () => {
             debounce((value: string) => {
                 setDebouncedSearch(value.toLowerCase());
             }, 300),
-        []
+        [],
     );
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +41,11 @@ export const Tasks = () => {
         if (date === "today" && !isToday(due)) return false;
         if (date === "week" && !isThisWeek(due)) return false;
         if (date === "month" && !isThisMonth(due)) return false;
-        if (date === "overdue" && (!isBefore(due, new Date()) || task.completed)) return false;
+        if (
+            date === "overdue" &&
+            (!isBefore(due, new Date()) || task.completed)
+        )
+            return false;
 
         if (
             (priority === "high" && task.priority !== "Высокий") ||
@@ -51,7 +55,11 @@ export const Tasks = () => {
             return false;
 
         // Поиск по заголовку
-        if (debouncedSearch && !task.title.toLowerCase().includes(debouncedSearch)) return false;
+        if (
+            debouncedSearch &&
+            !task.title.toLowerCase().includes(debouncedSearch)
+        )
+            return false;
         return true;
     });
 
@@ -65,7 +73,6 @@ export const Tasks = () => {
                     onChange={handleSearchChange}
                     className=""
                 />
-
             </div>
             {filteredTasks.length === 0 ? (
                 <div className="flex flex-col items-center justify-center text-gray-500 mt-16">

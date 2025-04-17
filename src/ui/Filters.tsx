@@ -8,7 +8,14 @@ import {
 import { Label } from "@/ui/shadcn/label";
 
 import { useAppDispatch } from "@/utils/hooks/useAppDispatch";
-import { setStatusFilter, setDateFilter, setPriorityFilter, StatusFilter, DateFilter, PriorityFilter } from "@/core/Filters/FiltersSlice";
+import {
+    setStatusFilter,
+    setDateFilter,
+    setPriorityFilter,
+    StatusFilter,
+    DateFilter,
+    PriorityFilter,
+} from "@/core/Filters/FiltersSlice";
 import { useAppSelector } from "@/utils/hooks/useAppSelector";
 
 export const Filters = () => {
@@ -18,21 +25,33 @@ export const Filters = () => {
         <div className="flex flex-wrap gap-4">
             <div className="flex flex-col gap-2">
                 <Label className="text-sm">Статус</Label>
-                <Select value={status} onValueChange={(value) => dispatch(setStatusFilter(value as StatusFilter))}>
+                <Select
+                    value={status}
+                    onValueChange={(value) =>
+                        dispatch(setStatusFilter(value as StatusFilter))
+                    }
+                >
                     <SelectTrigger className="w-[160px]">
                         <SelectValue placeholder="Выберите статус" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="all">Все</SelectItem>
                         <SelectItem value="completed">Выполнено</SelectItem>
-                        <SelectItem value="notCompleted">Не выполнено</SelectItem>
+                        <SelectItem value="notCompleted">
+                            Не выполнено
+                        </SelectItem>
                     </SelectContent>
                 </Select>
             </div>
 
             <div className="flex flex-col gap-2">
                 <Label className="text-sm">Дата</Label>
-                <Select value={date} onValueChange={(value) => dispatch(setDateFilter(value as DateFilter))}>
+                <Select
+                    value={date}
+                    onValueChange={(value) =>
+                        dispatch(setDateFilter(value as DateFilter))
+                    }
+                >
                     <SelectTrigger className="w-[160px]">
                         <SelectValue placeholder="По дате" />
                     </SelectTrigger>
@@ -48,7 +67,12 @@ export const Filters = () => {
 
             <div className="flex flex-col gap-2">
                 <Label className="text-sm">Приоритет</Label>
-                <Select value={priority} onValueChange={(value) => dispatch(setPriorityFilter(value as PriorityFilter))}>
+                <Select
+                    value={priority}
+                    onValueChange={(value) =>
+                        dispatch(setPriorityFilter(value as PriorityFilter))
+                    }
+                >
                     <SelectTrigger className="w-[160px]">
                         <SelectValue placeholder="По приоритету" />
                     </SelectTrigger>

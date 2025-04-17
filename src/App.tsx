@@ -19,7 +19,9 @@ export const App = () => {
                 description="Заполните форму, чтобы создать задачу"
                 submitButtonText="Создать задачу"
             />
-            <h2 className="text-4xl font-bold mb-10 text-center">Список задач</h2>
+            <h2 className="text-4xl font-bold mb-10 text-center">
+                Список задач
+            </h2>
             <Button onClick={openDialog}>Добавить новую задачу</Button>
             <Filters />
             <Tasks />
