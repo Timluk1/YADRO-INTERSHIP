@@ -120,23 +120,16 @@ export const DialogFormTask: React.FC<IDialogFormTaskProps> = ({
                                 <PopoverTrigger asChild>
                                     <Button
                                         variant={"outline"}
-                                        className={`w-full justify-start text-left font-normal ${
-                                            !field.value &&
-                                            "text-muted-foreground"
-                                        }`}
+                                        className={`w-full justify-start text-left font-normal ${!field.value && "text-muted-foreground"
+                                            }`}
                                     >
                                         <CalendarIcon className="mr-2 h-4 w-4" />
                                         {field.value
-                                            ? format(field.value, "PPP", {
-                                                  locale: ru,
-                                              })
+                                            ? format(field.value, "PPP", { locale: ru })
                                             : "Выберите дату"}
                                     </Button>
                                 </PopoverTrigger>
-                                <PopoverContent
-                                    className="w-auto p-0"
-                                    align="start"
-                                >
+                                <PopoverContent className="w-auto p-0" align="start" forceMount>
                                     <Calendar
                                         mode="single"
                                         selected={field.value}
@@ -145,6 +138,7 @@ export const DialogFormTask: React.FC<IDialogFormTaskProps> = ({
                                     />
                                 </PopoverContent>
                             </Popover>
+
                             <FormMessage />
                         </FormItem>
                     )}
