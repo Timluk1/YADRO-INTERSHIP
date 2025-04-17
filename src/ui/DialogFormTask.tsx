@@ -116,7 +116,7 @@ export const DialogFormTask: React.FC<IDialogFormTaskProps> = ({
                     render={({ field }) => (
                         <FormItem className="flex flex-col">
                             <FormLabel>Дата окончания задачи</FormLabel>
-                            <Popover>
+                            <Popover modal={true}>
                                 <PopoverTrigger asChild>
                                     <Button
                                         variant={"outline"}
